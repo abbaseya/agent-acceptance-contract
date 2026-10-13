@@ -1,0 +1,47 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "gate-review",
+    "kind": "judgment",
+    "version": "sha256:c08e593e2296"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:2b7e9d40c1a5",
+    "scope": [
+      "hooks/gates/",
+      "corpus/gate-verdicts.jsonl"
+    ]
+  },
+  "verdict": "block",
+  "findings": [
+    {
+      "id": "gate-review/blocked-command-passes/corpus/gate-verdicts.jsonl@sha256:4e1d9b0c72af#row:41",
+      "class": "blocked-command-passes",
+      "location": "corpus/gate-verdicts.jsonl@sha256:4e1d9b0c72af#row:41",
+      "what": "Row 41 of the corpus, a command the old gates blocked, passes the rewritten gates.",
+      "why": "CAP-2: no command the gates blocked before the rewrite passes after it.",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "delegate",
+        "role": "implementation-agent",
+        "authority": "CAP-2"
+      },
+      "check": {
+        "kind": "condition",
+        "condition": "The rewritten gates block row 41."
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "blocked-command-passes"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

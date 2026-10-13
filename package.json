@@ -1,0 +1,16 @@
+{
+  "name": "agent-acceptance-contract",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-validation tooling for the Agent Acceptance Contract (AAC) standard.",
+  "type": "module",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "validate": "node scripts/validate-examples.js",
+    "test": "node --test packages/validator/test.js"
+  },
+  "packageManager": "yarn@4.18.1"
+}

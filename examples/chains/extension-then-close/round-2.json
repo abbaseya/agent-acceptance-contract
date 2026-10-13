@@ -1,0 +1,31 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "gate-review",
+    "kind": "judgment",
+    "version": "sha256:0a7510ef4e5d"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:c6a1f38e0d27",
+    "scope": [
+      "hooks/gates/",
+      "policy/release-list.json"
+    ]
+  },
+  "verdict": "allow",
+  "findings": [],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "blocked-command-passes"
+    ]
+  },
+  "attempt": {
+    "n": 2,
+    "budget": 3
+  },
+  "carried": [
+    "gate-review/blocked-command-passes/corpus/probes.jsonl@sha256:9f20c1e4b7d3#heredoc-body"
+  ]
+}

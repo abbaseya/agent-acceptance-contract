@@ -1,0 +1,16 @@
+{
+  "fingerprint-stale.json": "§3",
+  "duplicate-criterion-id.json": "§4",
+  "duplicate-class.json": "§4",
+  "enumerable-condition-check.json": "§4",
+  "structural-without-condition.json": "§4",
+  "judgment-command-check.json": "§4",
+  "bounded-without-domain.json": "schema",
+  "enumerable-with-domain.json": "schema",
+  "invalid-chains/extension-over-budget": "§6",
+  "invalid-chains/condition-probe-on-bounded": "§6",
+  "invalid-chains/extension-fixed-by-builder": "§6",
+  "invalid-chains/stale-brief": "§8",
+  "invalid-chains/revision-skipped": "§3",
+  "invalid-chains/extension-past-budget": "§6"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@agent-acceptance-contract/validator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Validates Agent Acceptance Contracts, the AGC responses judged against them, and ordered chains of revisions and rounds: the JSON Schema plus the rules a schema cannot express.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.17.1"
+  }
+}

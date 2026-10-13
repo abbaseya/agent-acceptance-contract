@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/abbaseya/agent-acceptance-contract/schema/aac.schema.json",
+  "title": "Agent Acceptance Contract",
+  "description": "The criteria one unit of work must meet, declared before the work and held by the builder and by every gate. Version 0.1. See SPEC.md for the rules a schema cannot express. The check definition is copied from the Agent Gate Contract schema at tag v0.1.2.",
+  "type": "object",
+  "required": ["aac", "contract", "subject", "authority", "criteria", "budget"],
+  "additionalProperties": false,
+  "properties": {
+    "aac": { "const": "0.1" },
+    "contract": {
+      "type": "object",
+      "required": ["id", "revision", "fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "revision": { "type": "integer", "minimum": 1 },
+        "fingerprint": { "$ref": "#/$defs/fingerprint" }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "required": ["kind", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["tool-call", "diff", "commit", "artifact", "pull-request", "session"] },
+        "scope": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "required": ["kind", "ref"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["spec", "plan", "ticket", "other"] },
+        "ref": { "type": "string", "minLength": 1 }
+      }
+    },
+    "criteria": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/criterion" } },
+    "budget": {
+      "type": "object",
+      "required": ["extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "extensions": { "type": "integer", "minimum": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "fingerprint": { "type": "string", "pattern": "^sha256:[0-9a-f]{12}$" },
+    "artifact": {
+      "type": "object",
+      "required": ["artifact", "fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "artifact": { "type": "string", "minLength": 1 },
+        "fingerprint": { "$ref": "#/$defs/fingerprint" }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "required": ["id", "statement", "kind", "class", "checks"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "statement": { "type": "string", "minLength": 1 },
+        "authority": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["enumerable", "bounded", "structural", "judgment"] },
+        "class": { "type": "string", "minLength": 1 },
+        "cases": { "$ref": "#/$defs/cases" },
+        "domain": { "$ref": "#/$defs/domain" },
+        "construction": { "$ref": "#/$defs/construction" },
+        "checks": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/check" } },
+        "owner": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "enumerable" } } },
+          "then": { "required": ["cases"] },
+          "else": { "not": { "required": ["cases"] } }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "bounded" } } },
+          "then": { "required": ["domain"] },
+          "else": { "not": { "required": ["domain"] } }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "structural" } } },
+          "then": { "required": ["construction"] },
+          "else": { "not": { "required": ["construction"] } }
+        }
+      ]
+    },
+    "cases": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["ids"],
+          "additionalProperties": false,
+          "properties": {
+            "ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+          }
+        },
+        { "$ref": "#/$defs/artifact" }
+      ]
+    },
+    "domain": {
+      "type": "object",
+      "required": ["artifact", "fingerprint", "row"],
+      "additionalProperties": false,
+      "properties": {
+        "artifact": { "type": "string", "minLength": 1 },
+        "fingerprint": { "$ref": "#/$defs/fingerprint" },
+        "row": { "type": "string", "minLength": 1 }
+      }
+    },
+    "construction": {
+      "type": "object",
+      "required": ["list", "invariant"],
+      "additionalProperties": false,
+      "properties": {
+        "list": { "$ref": "#/$defs/artifact" },
+        "invariant": { "type": "string", "minLength": 1 }
+      }
+    },
+    "check": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["command", "preview", "condition"] },
+        "run": { "type": "string", "minLength": 1 },
+        "condition": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "command" } } }, "then": { "required": ["run"] } },
+        { "if": { "properties": { "kind": { "const": "condition" } } }, "then": { "required": ["condition"] } }
+      ]
+    }
+  }
+}

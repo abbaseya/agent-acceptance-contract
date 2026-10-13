@@ -1,0 +1,9 @@
+# Agent Acceptance Contract (AAC)
+
+> A standard JSON object for the criteria one unit of work must meet, declared before the work and held by the agent that builds and by every gate that judges. Every criterion declares its kind (enumerable, bounded, structural or judgment), a universal claim is never proven by a list, a probe is a runnable command on a row the contract holds, and a finding outside the contract is an extension with its own budget, routed to the contract's owner. AAC is the sibling of the Agent Gate Contract (AGC): AGC says how a gate answers, AAC says what it judges against.
+
+- [SPEC.md](SPEC.md): the normative specification
+- [schema/aac.schema.json](schema/aac.schema.json): JSON Schema 2020-12
+- [BINDINGS.md](BINDINGS.md): AGC, spec kernels and tickets, orchestrators, CI
+- [EVIDENCE.md](EVIDENCE.md): the measurement behind each rule, and the landscape
+- [examples/](examples/): one contract per kind, a mixed one, an extension-then-close chain, and invalid cases

@@ -1,0 +1,38 @@
+{
+  "aac": "0.1",
+  "contract": {
+    "id": "gate-rewrite",
+    "revision": 1,
+    "fingerprint": "sha256:435db5298fa2"
+  },
+  "subject": {
+    "kind": "diff",
+    "scope": [
+      "hooks/gates/",
+      "corpus/gate-verdicts.jsonl"
+    ]
+  },
+  "authority": {
+    "kind": "spec",
+    "ref": "spec:gate-rewrite"
+  },
+  "criteria": [
+    {
+      "id": "gate-rewrite/no-regression",
+      "statement": "No command that the four gates blocked before the rewrite passes after it.",
+      "authority": "CAP-2",
+      "kind": "bounded",
+      "class": "blocked-command-passes",
+      "checks": [
+        {
+          "kind": "command",
+          "run": "node scripts/gate-corpus.js corpus/gate-verdicts.jsonl"
+        }
+      ],
+      "owner": "spec owner"
+    }
+  ],
+  "budget": {
+    "extensions": 1
+  }
+}

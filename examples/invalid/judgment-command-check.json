@@ -1,0 +1,37 @@
+{
+  "aac": "0.1",
+  "contract": {
+    "id": "block-messages",
+    "revision": 1,
+    "fingerprint": "sha256:7f352a211f94"
+  },
+  "subject": {
+    "kind": "artifact",
+    "scope": [
+      "hooks/gates/messages.json"
+    ]
+  },
+  "authority": {
+    "kind": "ticket",
+    "ref": "ticket:https://github.com/example/ops/issues/214"
+  },
+  "criteria": [
+    {
+      "id": "block-messages/names-the-action",
+      "statement": "A block message names the action the command performs, not the text the gate matched.",
+      "authority": "ticket:https://github.com/example/ops/issues/214#1",
+      "kind": "judgment",
+      "class": "message-names-text",
+      "checks": [
+        {
+          "kind": "command",
+          "run": "grep -q action hooks/gates/messages.json"
+        }
+      ],
+      "owner": "product owner"
+    }
+  ],
+  "budget": {
+    "extensions": 1
+  }
+}

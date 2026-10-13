@@ -1,0 +1,37 @@
+{
+  "aac": "0.1",
+  "contract": {
+    "id": "block-messages",
+    "revision": 1,
+    "fingerprint": "sha256:42a246f7b73e"
+  },
+  "subject": {
+    "kind": "artifact",
+    "scope": [
+      "hooks/gates/messages.json"
+    ]
+  },
+  "authority": {
+    "kind": "ticket",
+    "ref": "ticket:https://github.com/example/ops/issues/214"
+  },
+  "criteria": [
+    {
+      "id": "block-messages/names-the-action",
+      "statement": "A block message names the action the command performs, not the text the gate matched.",
+      "authority": "ticket:https://github.com/example/ops/issues/214#1",
+      "kind": "judgment",
+      "class": "message-names-text",
+      "checks": [
+        {
+          "kind": "condition",
+          "condition": "A reader of the block message can say which action was refused without seeing the matched text."
+        }
+      ],
+      "owner": "product owner"
+    }
+  ],
+  "budget": {
+    "extensions": 1
+  }
+}

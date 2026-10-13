@@ -1,0 +1,51 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "gate-review",
+    "kind": "judgment",
+    "version": "sha256:c08e593e2296"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:6d3f0a81e9c2",
+    "scope": [
+      "hooks/gates/",
+      "corpus/gate-verdicts.jsonl"
+    ]
+  },
+  "verdict": "escalate",
+  "findings": [
+    {
+      "id": "gate-review/blocked-command-passes/corpus/probes.jsonl@sha256:9f20c1e4b7d3#heredoc-body",
+      "class": "blocked-command-passes",
+      "location": "corpus/probes.jsonl@sha256:9f20c1e4b7d3#heredoc-body",
+      "what": "A destructive command inside a heredoc body passes the rewritten gates; the old gates blocked it on its text.",
+      "why": "CAP-2: no command the gates blocked before the rewrite passes after it.",
+      "severity": "blocking",
+      "status": "still-open",
+      "remedy": {
+        "kind": "decide",
+        "ask": "spec owner",
+        "options": [
+          "grow: add the heredoc row to corpus/gate-verdicts.jsonl in revision 2 and keep the claim bounded",
+          "close: replace the universal claim with a closed release list and the invariant that no released shape is an interpreter body",
+          "narrow: restate CAP-2 over the command shapes the corpus holds today"
+        ]
+      },
+      "check": {
+        "kind": "command",
+        "run": "node scripts/gate-check.js --row corpus/probes.jsonl#heredoc-body"
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "blocked-command-passes"
+    ]
+  },
+  "attempt": {
+    "n": 2,
+    "budget": 3
+  }
+}

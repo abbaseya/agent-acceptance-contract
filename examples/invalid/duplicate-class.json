@@ -1,0 +1,106 @@
+{
+  "aac": "0.1",
+  "contract": {
+    "id": "gate-rewrite",
+    "revision": 1,
+    "fingerprint": "sha256:d95be2b9f192"
+  },
+  "subject": {
+    "kind": "diff",
+    "scope": [
+      "hooks/gates/",
+      "corpus/",
+      "policy/"
+    ]
+  },
+  "authority": {
+    "kind": "spec",
+    "ref": "spec:gate-rewrite"
+  },
+  "criteria": [
+    {
+      "id": "gate-rewrite/success-line",
+      "statement": "The five example commands in the success line get the verdict the line states.",
+      "authority": "CAP-1",
+      "kind": "enumerable",
+      "class": "example-verdict-mismatch",
+      "cases": {
+        "ids": [
+          "cd-worktree",
+          "status-in-main",
+          "rm-outside-scope",
+          "curl-pipe-shell",
+          "env-dump"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "command",
+          "run": "node scripts/gate-check.js --cases success-line"
+        }
+      ],
+      "owner": "spec owner"
+    },
+    {
+      "id": "gate-rewrite/no-regression",
+      "statement": "No command that the four gates blocked before the rewrite passes after it.",
+      "authority": "CAP-2",
+      "kind": "bounded",
+      "class": "example-verdict-mismatch",
+      "domain": {
+        "artifact": "corpus/gate-verdicts.jsonl",
+        "fingerprint": "sha256:4e1d9b0c72af",
+        "row": "A row is one command with its verdict before the rewrite and the verdict required after it; the spec owner adds a row in a new revision."
+      },
+      "checks": [
+        {
+          "kind": "command",
+          "run": "node scripts/gate-corpus.js corpus/gate-verdicts.jsonl"
+        }
+      ],
+      "owner": "spec owner"
+    },
+    {
+      "id": "gate-rewrite/release-list",
+      "statement": "An argument is released as data only when its shape is in the release list, and no released shape is an interpreter body.",
+      "authority": "CAP-3",
+      "kind": "structural",
+      "class": "interpreter-body-released",
+      "construction": {
+        "list": {
+          "artifact": "policy/release-list.json",
+          "fingerprint": "sha256:a7c3e05d1b94"
+        },
+        "invariant": "No entry of the release list is a body an interpreter would execute."
+      },
+      "checks": [
+        {
+          "kind": "command",
+          "run": "node scripts/release-list-check.js policy/release-list.json"
+        },
+        {
+          "kind": "condition",
+          "condition": "Every entry of the release list is one finite argument shape with a case in the corpus, and none is a body an interpreter would execute."
+        }
+      ],
+      "owner": "spec owner"
+    },
+    {
+      "id": "gate-rewrite/message-names-action",
+      "statement": "A block message names the action the command performs, not the text the gate matched.",
+      "authority": "CAP-4",
+      "kind": "judgment",
+      "class": "message-names-text",
+      "checks": [
+        {
+          "kind": "condition",
+          "condition": "A reader of the block message can say which action was refused without seeing the matched text."
+        }
+      ],
+      "owner": "spec owner"
+    }
+  ],
+  "budget": {
+    "extensions": 1
+  }
+}

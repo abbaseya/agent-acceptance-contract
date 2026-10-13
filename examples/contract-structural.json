@@ -1,0 +1,49 @@
+{
+  "aac": "0.1",
+  "contract": {
+    "id": "gate-rewrite",
+    "revision": 2,
+    "fingerprint": "sha256:0a7510ef4e5d"
+  },
+  "subject": {
+    "kind": "diff",
+    "scope": [
+      "hooks/gates/",
+      "policy/release-list.json"
+    ]
+  },
+  "authority": {
+    "kind": "spec",
+    "ref": "spec:gate-rewrite"
+  },
+  "criteria": [
+    {
+      "id": "gate-rewrite/no-regression",
+      "statement": "A command argument is released as data only when its shape is an entry of the release list, and no entry of the release list is an interpreter body.",
+      "authority": "CAP-2",
+      "kind": "structural",
+      "class": "blocked-command-passes",
+      "construction": {
+        "list": {
+          "artifact": "policy/release-list.json",
+          "fingerprint": "sha256:a7c3e05d1b94"
+        },
+        "invariant": "No entry of the release list is a body an interpreter would execute."
+      },
+      "checks": [
+        {
+          "kind": "command",
+          "run": "node scripts/release-list-check.js policy/release-list.json"
+        },
+        {
+          "kind": "condition",
+          "condition": "Every entry of the release list names one finite argument shape with a case in the corpus, and none is a body an interpreter would execute."
+        }
+      ],
+      "owner": "spec owner"
+    }
+  ],
+  "budget": {
+    "extensions": 1
+  }
+}

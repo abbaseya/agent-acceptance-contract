@@ -1,0 +1,44 @@
+{
+  "aac": "0.1",
+  "contract": {
+    "id": "retry-policies",
+    "revision": 1,
+    "fingerprint": "sha256:980376a7480b"
+  },
+  "subject": {
+    "kind": "diff",
+    "scope": [
+      "src/retry/"
+    ]
+  },
+  "authority": {
+    "kind": "spec",
+    "ref": "spec:retry#CAP-4"
+  },
+  "criteria": [
+    {
+      "id": "retry-policies/documented-delay",
+      "statement": "The three retry policies named in CAP-4, fixed, linear and exponential, compute the delay the table in CAP-4 states for attempts 1 to 5.",
+      "authority": "CAP-4",
+      "kind": "enumerable",
+      "class": "retry-delay-mismatch",
+      "cases": {
+        "ids": [
+          "fixed-1-5",
+          "linear-1-5",
+          "exponential-1-5"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "condition",
+          "condition": "Each policy computes the documented delay."
+        }
+      ],
+      "owner": "spec owner"
+    }
+  ],
+  "budget": {
+    "extensions": 1
+  }
+}
