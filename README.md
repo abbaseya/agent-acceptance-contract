@@ -173,10 +173,11 @@ The validator checks the JSON Schema and the rules a schema cannot express. Thos
 
 ## Status
 
-Draft 0.1. Field names may still change before 1.0. The done report of §7 has no object yet. Bindings are non-normative. The website will be [aacos.dev](https://aacos.dev); it is registered and not yet live.
+Draft 0.1. Field names may still change before 1.0. The done report of §7 has no object yet. Bindings are non-normative.
 
 ## Related
 
+- [aacos.dev](https://aacos.dev) is the website. It renders the specification, the evidence and the bindings from each tagged release.
 - [Agent Gate Contract](https://github.com/abbaseya/agent-gate-contract) standardises the gate's answer. AAC standardises what the gate judges against, and links a finding to a criterion through the AGC `class`.
 
 ## License
