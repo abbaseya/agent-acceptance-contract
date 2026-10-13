@@ -1,12 +1,16 @@
 {
   "name": "@agent-acceptance-contract/validator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Validates Agent Acceptance Contracts, the AGC responses judged against them, and ordered chains of revisions and rounds: the JSON Schema plus the rules a schema cannot express.",
   "type": "module",
   "main": "index.js",
   "exports": {
     ".": "./index.js"
+  },
+  "scripts": {
+    "prepack": "node -e \"const fs=require('node:fs');fs.mkdirSync('schema',{recursive:true});fs.copyFileSync('../../schema/aac.schema.json','schema/aac.schema.json')\"",
+    "postpack": "node -e \"require('node:fs').rmSync('schema',{recursive:true,force:true})\""
   },
   "license": "MIT",
   "dependencies": {

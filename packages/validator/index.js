@@ -1,8 +1,11 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import Ajv2020 from 'ajv/dist/2020.js';
 
-const schemaUrl = new URL('../../schema/aac.schema.json', import.meta.url);
+// A packed copy of the package (a git install) carries the schema beside
+// index.js. In the repo, the schema is at the root.
+const packedSchema = new URL('./schema/aac.schema.json', import.meta.url);
+const schemaUrl = existsSync(packedSchema) ? packedSchema : new URL('../../schema/aac.schema.json', import.meta.url);
 export const aacSchema = JSON.parse(readFileSync(schemaUrl, 'utf8'));
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });
